@@ -97,11 +97,7 @@ function Scene() {
 
   return (
     <Canvas>
-      {/* Your 3D scene */}
-      <mesh>
-        <sphereGeometry />
-        <meshNormalMaterial />
-      </mesh>
+      {/* Your 3D scene comes here */}
 
       {/* Magnifying glass */}
       <Magnify position={mousePos} />
@@ -141,13 +137,13 @@ npm run build
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📝 License
+## License
 
 [MIT](LICENSE) © [Amit Diamant](https://github.com/amitdiamant) (refactored and extended by [Malte Hansen](https://github.com/malte-hansen))
 
 ## Acknowledgments
 
-- This is a forked project, check out the original project [magnify-3d](https://github.com/amitdiamant/magnify-3d) library
+- This is a forked project, please also check out the awesome work in the original project: [magnify-3d](https://github.com/amitdiamant/magnify-3d)
 - [three.js](https://github.com/mrdoob/three.js) - 3D library
 - [React Three Fiber](https://github.com/pmndrs/react-three-fiber) - React renderer for three.js
 - [FXAA Shader](https://github.com/mrdoob/three.js/blob/dev/examples/js/shaders/FXAAShader.js) - Fast approximate anti-aliasing
