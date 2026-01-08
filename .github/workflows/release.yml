@@ -1,0 +1,65 @@
+name: Publish to GitHub npm Registry
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.1'
+          cache: npm
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@malte-hansen'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library
+        run: npm run build:all
+
+      - name: Verify build output
+        run: |
+          echo "Checking dist directory..."
+          ls -la dist/
+          if [ ! -f "dist/index.esm.js" ] || [ ! -f "dist/index.cjs.js" ]; then
+            echo "Build output files not found"
+            exit 1
+          fi
+          if [ ! -f "dist/index.d.ts" ]; then
+            echo "Type definitions not found"
+            exit 1
+          fi
+          echo "Build verification successful"
+
+      - name: Configure package for GitHub Registry
+        run: |
+          # Update package.json to add publishConfig and correct name
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            pkg.publishConfig = { registry: 'https://npm.pkg.github.com' };
+            if (!pkg.name.startsWith('@')) {
+              pkg.name = '@malte-hansen/' + pkg.name;
+            }
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          cat package.json
+
+      - name: Publish to GitHub Package Registry
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

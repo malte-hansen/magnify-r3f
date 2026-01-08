@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Real time optic magnifying glass component for React Three Fiber.",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
