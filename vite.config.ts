@@ -33,6 +33,31 @@ export default defineConfig(({ mode }) => {
         },
       },
     };
+  } else if (mode === "demo") {
+    // Build demo for GitHub Pages
+    return {
+      plugins: [react(), glsl()],
+      root: "demo",
+      base: process.env.BASE_PATH || "/magnify-r3f/",
+      resolve: {
+        alias: {
+          "magnify-r3f": resolve(__dirname, "src/index.tsx"),
+        },
+      },
+      build: {
+        outDir: resolve(__dirname, "dist-demo"),
+        emptyOutDir: true,
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              react: ["react", "react-dom"],
+              three: ["three"],
+              r3f: ["@react-three/fiber", "@react-three/drei"],
+            },
+          },
+        },
+      },
+    };
   } else {
     // Development mode - run demo
     return {
