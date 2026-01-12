@@ -1,4 +1,4 @@
-name: Publish to GitHub npm Registry
+name: Publish to npm and GitHub Package Registry
 
 on:
   release:
@@ -20,10 +20,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.11.1'
+          node-version: '20'
           cache: npm
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@malte-hansen'
 
       - name: Install dependencies
         run: npm ci
@@ -45,6 +43,9 @@ jobs:
           fi
           echo "Build verification successful"
 
+      - name: Save original package.json
+        run: cp package.json package.json.original
+
       - name: Configure package for GitHub Registry
         run: |
           # Update package.json to add publishConfig and correct name
@@ -59,7 +60,28 @@ jobs:
           "
           cat package.json
 
+      - name: Setup Node.js for GitHub Package Registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@malte-hansen'
+
       - name: Publish to GitHub Package Registry
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore original package.json
+        run: mv package.json.original package.json
+
+      - name: Setup Node.js for npm Registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish to npm Registry
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
