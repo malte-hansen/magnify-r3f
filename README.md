@@ -1,6 +1,5 @@
 # Magnify R3F
 
-[![version](https://img.shields.io/badge/version-2.0.0-green.svg)](https://semver.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Real-time optical magnifying glass component for [React Three Fiber](https://github.com/pmndrs/react-three-fiber). Get a high-res zoomed section of your 3D scene with a simple, easy-to-use React component.
