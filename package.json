@@ -1,5 +1,5 @@
 {
-  "name": "magnify-r3f",
+  "name": "@malte-hansen/magnify-r3f",
   "version": "2.0.0",
   "description": "Real time optic magnifying glass component for React Three Fiber.",
   "type": "module",
