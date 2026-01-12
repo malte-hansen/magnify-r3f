@@ -64,5 +64,9 @@
     "react",
     "react-three-fiber",
     "r3f"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }
