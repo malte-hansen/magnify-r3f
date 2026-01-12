@@ -1,7 +1,8 @@
 {
   "name": "@malte-hansen/magnify-r3f",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Real time optic magnifying glass component for React Three Fiber.",
+  "homepage": "https://malte-hansen.github.io/magnify-r3f/",
   "type": "module",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",

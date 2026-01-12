@@ -17,19 +17,19 @@ Real-time optical magnifying glass component for [React Three Fiber](https://git
 ## Installation
 
 ```bash
-npm install magnify-r3f
+npm install @malte-hansen/magnify-r3f
 ```
 
 ## Demo
 
-Check out the [live demo](#) to see the magnifying glass in action!
+Check out the [live demo](https://malte-hansen.github.io/magnify-r3f/) to see the magnifying glass in action!
 
 ## Quick Start
 
 ```tsx
 import React, { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Magnify } from "magnify-r3f";
+import { Magnify } from "@malte-hansen/magnify-r3f";
 
 function App() {
   const [mousePos, setMousePos] = useState(null);
@@ -82,7 +82,7 @@ The simplest way to add a magnifying glass to your scene:
 
 ```tsx
 import { Canvas } from "@react-three/fiber";
-import { Magnify } from "magnify-r3f";
+import { Magnify } from "@malte-hansen/magnify-r3f";
 
 function Scene() {
   const [mousePos, setMousePos] = useState(null);
