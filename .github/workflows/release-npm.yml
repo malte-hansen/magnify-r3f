@@ -6,46 +6,19 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write  # Required for OIDC
   contents: read
-  packages: write
-  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build library
-        run: npm run build:all
-
-      - name: Verify build output
-        run: |
-          echo "Checking dist directory..."
-          ls -la dist/
-          if [ ! -f "dist/index.esm.js" ] || [ ! -f "dist/index.cjs.js" ]; then
-            echo "Build output files not found"
-            exit 1
-          fi
-          if [ ! -f "dist/index.d.ts" ]; then
-            echo "Type definitions not found"
-            exit 1
-          fi
-          echo "Build verification successful"
-
-      - name: Publish to npm Registry
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm ci
+      - run: npm run build:all
+      - run: npm publish --access public
