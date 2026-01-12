@@ -235,6 +235,19 @@ export function Magnify({
     const autoClearBackup = gl.autoClear;
     gl.autoClear = true;
 
+    // Store the original clear color and set the scene background or white
+    const originalClearColor = gl.getClearColor(new THREE.Color());
+    const originalClearAlpha = gl.getClearAlpha();
+
+    // Get the scene's background color or default to white
+    let clearColor: THREE.Color;
+    if (scene.background instanceof THREE.Color) {
+      clearColor = scene.background;
+    } else {
+      clearColor = new THREE.Color(0xffffff); // Default to white
+    }
+    gl.setClearColor(clearColor, 1.0);
+
     // Render original scene to default target
     gl.setRenderTarget(defaultTarget.current);
     gl.render(scene, camera);
@@ -242,6 +255,9 @@ export function Magnify({
     // Render zoomed scene to zoom target
     gl.setRenderTarget(zoomTarget.current);
     gl.render(scene, camera);
+
+    // Restore original clear color
+    gl.setClearColor(originalClearColor, originalClearAlpha);
 
     // Apply magnify effect (with optional FXAA)
     if (antialias) {
