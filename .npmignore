@@ -1,9 +1,11 @@
 demo/
 src/
+.github/
 .gitignore
 .vscode/
 .idea/
 tsconfig.json
+tsconfig.lib.json
 tsconfig.node.json
 vite.config.ts
 rollup.config.js
